@@ -1,4 +1,4 @@
-import { loadEnvs, validateEnvs, setupEnvWatcher } from "../env.js";
+import { loadEnvs, validateEnvs, setupEnvWatcher } from "./env.js";
 
 const version = '1.0.0-stable';
 const env = loadEnvs();
