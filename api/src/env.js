@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import { red, yellow } from './console-text.js';
+import { red, yellow } from './src/console-text.js'; 
 import { readFileSync, watch } from 'node:fs';
 
 let envs;
