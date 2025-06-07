@@ -1,7 +1,7 @@
-import { getVersion } from "@imput/version-info";
-import { loadEnvs, validateEnvs, setupEnvWatcher } from "./core/env.js";
+// import { getVersion } from "blape/version-info"; 
+import { loadEnvs, validateEnvs, setupEnvWatcher } from "./env.js";
 
-const version = await getVersion();
+const version = '1.0.0-stable';
 
 const env = loadEnvs();
 
