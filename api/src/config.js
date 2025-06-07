@@ -1,5 +1,5 @@
 // import { getVersion } from "blape/version-info"; 
-import { loadEnvs, validateEnvs, setupEnvWatcher } from "./env.js";
+import { loadEnvs, validateEnvs, setupEnvWatcher } from "../env.js";
 
 const version = '1.0.0-stable';
 
