@@ -1,15 +1,15 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-// --- Início da Lógica Corrigida ---
-// Pega o caminho absoluto do diretório onde este arquivo (config.js) está
+// --- Início da Lógica Corrigida e Final ---
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const envPath = path.join(__dirname, 'env.js');
 
-// Importa o 'env.js' usando o caminho absoluto, garantindo que sempre será encontrado
-import { loadEnvs, validateEnvs, setupEnvWatcher } from path.join(__dirname, 'env.js');
-// --- Fim da Lógica Corrigida ---
+// Importa o módulo 'env' dinamicamente usando o caminho absoluto
+const { loadEnvs, validateEnvs, setupEnvWatcher } = await import(envPath);
+// --- Fim da Lógica Corrigida e Final ---
 
-const version = '1.0.0-stable'; // Mantemos a versão fixa
+const version = '1.0.0-stable';
 
 const env = loadEnvs();
 
