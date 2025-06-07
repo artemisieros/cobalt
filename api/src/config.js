@@ -1,11 +1,20 @@
-import { loadEnvs, validateEnvs, setupEnvWatcher } from "./env.js";
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const version = '1.0.0-stable';
+// --- Início da Lógica Corrigida ---
+// Pega o caminho absoluto do diretório onde este arquivo (config.js) está
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// Importa o 'env.js' usando o caminho absoluto, garantindo que sempre será encontrado
+import { loadEnvs, validateEnvs, setupEnvWatcher } from path.join(__dirname, 'env.js');
+// --- Fim da Lógica Corrigida ---
+
+const version = '1.0.0-stable'; // Mantemos a versão fixa
 
 const env = loadEnvs();
 
-const genericUserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36";
-const cobaltUserAgent = `cobalt/${version} (+https://github.com/imputnet/cobalt)`;
+const genericUserAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36';
+const cobaltVersion = `cobalt:${version} (https://github.com/imput/cobalt)`;
 
 export const canonicalEnv = Object.freeze(structuredClone(process.env));
 export const setTunnelPort = (port) => env.tunnelPort = port;
@@ -17,7 +26,7 @@ export const updateEnv = (newEnv) => {
     for (const key in env) {
         env[key] = newEnv[key];
     }
-}
+};
 
 await validateEnvs(env);
 
@@ -28,5 +37,5 @@ if (env.envFile) {
 export {
     env,
     genericUserAgent,
-    cobaltUserAgent,
-}
+    cobaltVersion,
+};
