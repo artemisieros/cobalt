@@ -1,16 +1,6 @@
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-
-// --- Início da Lógica Corrigida e Final ---
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const envPath = path.join(__dirname, 'env.js');
-
-// Importa o módulo 'env' dinamicamente usando o caminho absoluto
-const { loadEnvs, validateEnvs, setupEnvWatcher } = await import(envPath);
-// --- Fim da Lógica Corrigida e Final ---
+import { loadEnvs, validateEnvs, setupEnvWatcher } from "../env.js";
 
 const version = '1.0.0-stable';
-
 const env = loadEnvs();
 
 const genericUserAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36';
@@ -20,7 +10,6 @@ export const canonicalEnv = Object.freeze(structuredClone(process.env));
 export const setTunnelPort = (port) => env.tunnelPort = port;
 export const isCluster = env.instanceCount > 1;
 export const updateEnv = (newEnv) => {
-    // tunnelPort is special and needs to get carried over here
     newEnv.tunnelPort = env.tunnelPort;
 
     for (const key in env) {
