@@ -1,23 +1,20 @@
 # Usa a imagem base do Node.js v24 com Alpine Linux
 FROM node:24-alpine
 
-# Define o diretório de trabalho principal
+# Define o diretório de trabalho principal e o mantém até o fim
 WORKDIR /app
 
-# Habilita o pnpm
+# Configura e habilita o pnpm
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
 
-# Copia TODOS os arquivos do seu projeto para dentro do container
+# Copia TODOS os arquivos do projeto para o diretório de trabalho
 COPY . .
 
-# Instala SOMENTE as dependências de produção
-# O pnpm é inteligente para lidar com workspaces
+# Instala as dependências de produção.
+# O pnpm irá lidar com a estrutura do monorepo/workspace.
 RUN pnpm install --prod --frozen-lockfile
-
-# Define o diretório de trabalho para o pacote específico da API
-WORKDIR /app/api
 
 # Define o usuário como 'node' (não-root) por segurança
 USER node
@@ -25,5 +22,7 @@ USER node
 # Expõe a porta que a aplicação usa
 EXPOSE 9000
 
-# Comando final para iniciar a sua aplicação
-CMD [ "node", "src/cobalt.js" ]
+# Comando final para iniciar a aplicação
+# Executamos a partir da raiz do app, com o caminho completo para o script.
+# Isso elimina qualquer ambiguidade sobre o diretório de trabalho.
+CMD [ "node", "api/src/cobalt.js" ]
